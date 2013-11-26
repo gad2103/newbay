@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      #holidayCard {
+        width: 500px;
+        height: 650px;
+        background: url('images/NewBayMedia_HolidayCard.png');
+      }
+      /* General Styling of the snowflakes */
+      div#flakes {
+        position: absolute;
+        top: -50px;
+        z-index: 0;
+        height: 1px !important;
+      }
+
+      /* default animation and transform */
+      i {
+        display: inline-block;
+        border-radius: 50%;
+        opacity: 0;
+        height: 8px; width: 5px;
+        pointer-events: none;
+        -webkit-font-smoothing: antialiased; 
+        -moz-font-smoothing: antialiased; 
+        -webkit-transform-origin: left -20px;
+        -webkit-animation-name: falling;
+        -webkit-animation-duration: 3s;
+        -webkit-animation-direction:normal;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-delay: 0s;
+        -webkit-animation-fill-mode: none;
+        -webkit-animation-play-state:running;
+        /* or */
+        -moz-animation: falling 3s linear 2s 20;
+      }
+
+      /* animation used for ALL snowflakes */
+      @-webkit-keyframes falling {
+        0% {
+          -webkit-transform: 
+          translate3d(0, 0, 0) rotate(0deg) scale(0.9, 0.9);
+          opacity: 1;
+          background-color: white;
+        }
+        30% {
+          opacity: 0.7;
+        }
+        55%{
+          opacity: 0;
+        }
+        100% {
+          -webkit-transform: 
+          translate3d(30px, 1000px, 0) rotate(360deg) scale(1.1, 1.1);
+        }
+      }
+      @-moz-keyframes falling {
+        0% {
+          -moz-transform: 
+          translate3d(0, 0, 0) rotate(0deg) scale(0.9, 0.9);
+          opacity: 1;
+          background-color: white;
+        }
+        80% {
+          opacity: 0.7;
+        }
+        100% {
+          -moz-transform: 
+          translate(30px, 1000px) rotate(360deg) scale(1.1, 1.1);
+          opacity: 0;
+        }
+      }
+      .topmost {
+        position: relative;
+        z-index: 200;
+      }
+      /* different sizes, and default origins based on size */
+      .lg {
+        height:20px;
+        width:20px;
+        -webkit-transform-origin: right -30px;
+        -moz-transform-origin: right -30px;
+      }
+      .med {
+        height:10px;
+        width:10px;
+        -webkit-transform-origin: left -30px;
+        -moz-transform-origin: left -30px;
+      }
+      .sm {
+        height:4px;
+        width:3px;
+        -webkit-transform-origin: -30px 0;
+        -moz-transform-origin: -30px 0;
+      }
+      /* different speeds, with iteration counts to equal 3minutes approx. */
+      .slow {
+        -webkit-animation-duration: 5.3s;
+        -webkit-animation-iteration-count: infinite; /* 12 */
+        -webkit-transform-origin: -10px -20px;
+      }
+      .med {
+        -webkit-animation-duration: 3.1s;
+        -webkit-animation-iteration-count: infinite; /* 20 */
+        -webkit-transform-origin: 10px -20px;
+      }
+      .fast {
+        -webkit-animation-duration: 2.7s;
+        -webkit-animation-iteration-count: infinite; /* 35 */
+        -webkit-transform-origin: right -20px;
+      }
+      /* different delays so they don't all start at the same time */
+      .del1 {
+        -webkit-animation-delay: 1.3s;
+        -moz-animation-delay: 2.3s;
+      }
+      .del2 {
+        -webkit-animation-delay: 0.5s;
+        -moz-animation-delay: 1.5s;
+      }
+      .del3 {
+        -webkit-animation-delay: 2.4s;
+        -moz-animation-delay: 3.4s;
+      }
+      /* playing with timing functions to make it a teeny bit more random like */
+      .lg.del2 {
+        -webkit-animation-timing-function:ease-in-out;
+      }
+      .lg.del1 {
+        -webkit-animation-timing-function:ease-out;
+      }
+      .avg.del3 {
+        -webkit-animation-timing-function:ease;
+      }
+      .lg.del2 {
+        -moz-animation-timing-function:ease-in-out;
+      }
+      .lg.del1 {
+        -moz-animation-timing-function:ease-out;
+      }
+      .avg.del3 {
+        -moz-animation-timing-function:ease;
+      }
+      /* playing with opacity to make it a teeny bit more random like */
+      .avg.del2 {
+        opacity: 0.5
+      }
+      .avg.del1 {
+        opacity: 0.3
+      }
+      .fast.del2 {
+        opacity: 0.7
+      }
+      .fast.del1 {
+        opacity: 0.6;
+        -webkit-animation-timing-function:ease-in;
+        -webkit-transform-origin: left 10px;
+        -moz-animation-timing-function:ease-in;
+        -moz-transform-origin: left 10px;
+      }
+      .slow {
+        opacity: 0.8
+      }
+      #logos {
+        position: absolute;
+        top: -600px;
+        left: 18px;
+        z-index: 20000;
+        width: 500px;
+      }
+      #logos img {
+        float: left;
+        -webkit-animation: logoFalling ease-in infinite running;
+        -webkit-transform-origin: left -20px;
+        -webkit-animation-direction:normal;
+        -webkit-animation-fill-mode: none;
+
+      }
+      img:nth-of-type(3n) { -webkit-animation-delay: 1.3s !important; -webkit-animation-duration: 10s !important; }
+      img:nth-of-type(3n+1) {-webkit-animation-delay: 0.5s !important;-webkit-animation-duration: 16s !important; }
+      img:nth-of-type(3n+2) { -webkit-animation-delay: 2.4s !important;-webkit-animation-duration: 20s !important; }
+      @-webkit-keyframes logoFalling {
+        0% {
+          top:0px;
+          -webkit-transform: translate3d(0, 0, 0) rotate(-20deg) scale(0.9, 0.9);
+          opacity: 1;
+        }
+        /*20% {
+          -webkit-transform: rotate(5deg);
+        }
+        50% {
+          -webkit-transform: rotate(-5deg);
+        }*/
+        70% {
+          opacity: 0.7;
+        }
+        100% {
+          opacity: 0;
+          -webkit-transform: translate3d(0, 700px, 0) rotate(20deg) scale(1.1, 1.1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="holidayCard">
+      <div id="flakes"> <i class="lg slow del2"></i> <i class="sm fast del1"></i> <i class="lg avg del3"></i> <i class="med slow del1"></i> <i class="lg slow del3"></i> <i class="sm avg del1"></i> <i class="med avg del2"></i> <i class="lg avg del1"></i> <i class="sm slow del1"></i> <i class="med fast del2"></i> <i class="med slow del3"></i> <i class="slow del2"></i> <i class="sm avg del2"></i> <i class="sm avg del3"></i> <i class="lg avg del1"></i> <i class="lg fast del2"></i> <i class=" slow del3"></i> <i class="med avg del1"></i> <i class="lg avg"></i> <i class="sm fast del3"></i> <i class="lg slow del1"></i> <i class="sm fast del2"></i> <i class="med  del3"></i> <i class="med slow"></i> <i class="sm slow del2"></i> <i class="lg avg del3"></i> <i class="lg fast del1"></i> <i class="sm slow del1"></i> <i class="avg del3"></i> <i class="med slow del3"></i> <i class="lg avg del2"></i> <i class="sm slow del2"></i> <i class="sm fast del3"></i> <i class="fast del1"></i> <i class="lg slow del2"></i> <i class="med avg del3"></i> <i class="med del1"></i> <i class="lg  del2"></i> <i class="sm slow del3"></i> <i class="lg avg del1"></i></div>
+      <div id="logos">
+<img class="logo del3" src="images/ME logo.png"><img class="logo del2" src="images/RentalStaging.png"><img class="logo del3" src="images/CreativePlanet.png"><img class="logo del1" src="images/GVExpo_Logo.png"><img class="logo del1" src="images/BroadcastProduction.png"><img class="logo del1" src="images/PSN.png"><img class="logo del1" src="images/DVExpo.png"><img class="logo del1" src="images/videoedge_grey.png"><img class="logo del3" src="images/GovVideo.png"><img class="logo del1" src="images/MCV.png"><img class="logo del2" src="images/GPlayer.png"><img class="logo del3" src="images/MultiChannel.png"><img class="logo del2" src="images/NextTV_logo_grey.png"><img class="logo del3" src="images/AudioPro_official_logo.png"><img class="logo del1" src="images/KB_logo2011.png"><img class="logo del3" src="images/PAR.png"><img class="logo del3" src="images/Licencingbiz_official_logo.png"><img class="logo del1" src="images/TWICE.png"><img class="logo del1" src="images/Revolver logo.png"><img class="logo del1" src="images/TechLearning.png"><img class="logo del1" src="images/Guitar World Logo.png"><img class="logo del3" src="images/TVT.png"><img class="logo del3" src="images/AudioMedia.png"><img class="logo del3" src="images/DigiSignage.png"><img class="logo del3" src="images/RadioLogo_2011.png"><img class="logo del2" src="images/MIX_logo.png"><img class="logo del2" src="images/Connect2ME_Logo_grey.png"><img class="logo del2" src="images/RadioWorld.png"><img class="logo del2" src="images/B&C.png"><img class="logo del1" src="images/Music Week logo.png"><img class="logo del3" src="images/Installation logo.png"><img class="logo del3" src="images/AVTech.png"><img class="logo del2" src="images/BikeBizLogo.png"><img class="logo del3" src="images/GA_logo.png"><img class="logo del2" src="images/SCN.png"><img class="logo del3" src="images/SVC_2011_logo.png"><img class="logo del1" src="images/BPlayer_2012.png"><img class="logo del2" src="images/ToyNews_official.png"><img class="logo del1" src="images/PCR_Logo_official.png"><img class="logo del2" src="images/TVBE Logo.png"><img class="logo del2" src="images/healthcareAV.png"><img class="logo del1" src="images/Digital Video Logo_2011_grey.png"><img class="logo del1" src="images/PSNE Logo - outlines.png"><img class="logo del3" src="images/Resi.png"><img class="logo del3" src="images/MIPRO_LOGO_official.png"><img class="logo del1" src="images/SchoolCIO_Logo_grey.png"><img class="logo del2" src="images/sourcebook logo_official.png"><img class="logo del3" src="images/Develop_logo_official.png">
+      </div>
+      <!--<div id="footerImage"><img src="images/footer.png"></div>-->
+    </body>
+  </html>
+
