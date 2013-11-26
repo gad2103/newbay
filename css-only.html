@@ -165,40 +165,47 @@
       }
       #logos {
         position: absolute;
-        top: -600px;
+        top: -645px;
         left: 18px;
         z-index: 20000;
         width: 500px;
       }
-      #logos img {
-        float: left;
-        -webkit-animation: logoFalling ease-in infinite running;
+      #logos div {
+        float:left;
+        -webkit-animation: logoFalling linear 1;
         -webkit-transform-origin: left -20px;
         -webkit-animation-direction:normal;
         -webkit-animation-fill-mode: none;
-
       }
-      img:nth-of-type(3n) { -webkit-animation-delay: 1.3s !important; -webkit-animation-duration: 10s !important; }
-      img:nth-of-type(3n+1) {-webkit-animation-delay: 0.5s !important;-webkit-animation-duration: 16s !important; }
-      img:nth-of-type(3n+2) { -webkit-animation-delay: 2.4s !important;-webkit-animation-duration: 20s !important; }
+      #logos div:nth-of-type(3n) { -webkit-animation-delay: 36.3s !important; -webkit-animation-duration: 20s !important; }
+      #logos div:nth-of-type(3n+1) {-webkit-animation-delay: 18.0s !important;-webkit-animation-duration: 20s !important; }
+      #logos div:nth-of-type(3n+2) { -webkit-animation-delay: 1.4s !important;-webkit-animation-duration: 20s !important; }
+      #logos div img {
+        -webkit-animation: logoRotate 1s infinite;
+        -webkit-animation-direction: alternate;
+        -webkit-animation-timing-function: ease-in-out;
+        -webkit-transform-origin: 50% -50%;
+      }
+      #logos div > img:nth-of-type(3n) { -webkit-animation-delay: 0.3s !important; -webkit-transform-origin: 100% -75% !important; }
+      @-webkit-keyframes logoRotate {
+        0% {
+          -webkit-transform: translate3d(15px,0,0) rotate(-2deg);
+        }
+        100% {
+          -webkit-transform: translate3d(-15px,0,0) rotate(2deg);
+        }
+      }
       @-webkit-keyframes logoFalling {
         0% {
-          top:0px;
-          -webkit-transform: translate3d(0, 0, 0) rotate(-20deg) scale(0.9, 0.9);
+          -webkit-transform: translate3d(0, 0, 0) scale(0.9, 0.9);
           opacity: 1;
         }
-        /*20% {
-          -webkit-transform: rotate(5deg);
-        }
-        50% {
-          -webkit-transform: rotate(-5deg);
-        }*/
         70% {
           opacity: 0.7;
         }
         100% {
           opacity: 0;
-          -webkit-transform: translate3d(0, 700px, 0) rotate(20deg) scale(1.1, 1.1);
+          -webkit-transform: translate3d(0, 700px, 0)  scale(1.1, 1.1);
         }
       }
     </style>
@@ -207,9 +214,10 @@
     <div id="holidayCard">
       <div id="flakes"> <i class="lg slow del2"></i> <i class="sm fast del1"></i> <i class="lg avg del3"></i> <i class="med slow del1"></i> <i class="lg slow del3"></i> <i class="sm avg del1"></i> <i class="med avg del2"></i> <i class="lg avg del1"></i> <i class="sm slow del1"></i> <i class="med fast del2"></i> <i class="med slow del3"></i> <i class="slow del2"></i> <i class="sm avg del2"></i> <i class="sm avg del3"></i> <i class="lg avg del1"></i> <i class="lg fast del2"></i> <i class=" slow del3"></i> <i class="med avg del1"></i> <i class="lg avg"></i> <i class="sm fast del3"></i> <i class="lg slow del1"></i> <i class="sm fast del2"></i> <i class="med  del3"></i> <i class="med slow"></i> <i class="sm slow del2"></i> <i class="lg avg del3"></i> <i class="lg fast del1"></i> <i class="sm slow del1"></i> <i class="avg del3"></i> <i class="med slow del3"></i> <i class="lg avg del2"></i> <i class="sm slow del2"></i> <i class="sm fast del3"></i> <i class="fast del1"></i> <i class="lg slow del2"></i> <i class="med avg del3"></i> <i class="med del1"></i> <i class="lg  del2"></i> <i class="sm slow del3"></i> <i class="lg avg del1"></i></div>
       <div id="logos">
-<img class="logo del3" src="images/ME logo.png"><img class="logo del2" src="images/RentalStaging.png"><img class="logo del3" src="images/CreativePlanet.png"><img class="logo del1" src="images/GVExpo_Logo.png"><img class="logo del1" src="images/BroadcastProduction.png"><img class="logo del1" src="images/PSN.png"><img class="logo del1" src="images/DVExpo.png"><img class="logo del1" src="images/videoedge_grey.png"><img class="logo del3" src="images/GovVideo.png"><img class="logo del1" src="images/MCV.png"><img class="logo del2" src="images/GPlayer.png"><img class="logo del3" src="images/MultiChannel.png"><img class="logo del2" src="images/NextTV_logo_grey.png"><img class="logo del3" src="images/AudioPro_official_logo.png"><img class="logo del1" src="images/KB_logo2011.png"><img class="logo del3" src="images/PAR.png"><img class="logo del3" src="images/Licencingbiz_official_logo.png"><img class="logo del1" src="images/TWICE.png"><img class="logo del1" src="images/Revolver logo.png"><img class="logo del1" src="images/TechLearning.png"><img class="logo del1" src="images/Guitar World Logo.png"><img class="logo del3" src="images/TVT.png"><img class="logo del3" src="images/AudioMedia.png"><img class="logo del3" src="images/DigiSignage.png"><img class="logo del3" src="images/RadioLogo_2011.png"><img class="logo del2" src="images/MIX_logo.png"><img class="logo del2" src="images/Connect2ME_Logo_grey.png"><img class="logo del2" src="images/RadioWorld.png"><img class="logo del2" src="images/B&C.png"><img class="logo del1" src="images/Music Week logo.png"><img class="logo del3" src="images/Installation logo.png"><img class="logo del3" src="images/AVTech.png"><img class="logo del2" src="images/BikeBizLogo.png"><img class="logo del3" src="images/GA_logo.png"><img class="logo del2" src="images/SCN.png"><img class="logo del3" src="images/SVC_2011_logo.png"><img class="logo del1" src="images/BPlayer_2012.png"><img class="logo del2" src="images/ToyNews_official.png"><img class="logo del1" src="images/PCR_Logo_official.png"><img class="logo del2" src="images/TVBE Logo.png"><img class="logo del2" src="images/healthcareAV.png"><img class="logo del1" src="images/Digital Video Logo_2011_grey.png"><img class="logo del1" src="images/PSNE Logo - outlines.png"><img class="logo del3" src="images/Resi.png"><img class="logo del3" src="images/MIPRO_LOGO_official.png"><img class="logo del1" src="images/SchoolCIO_Logo_grey.png"><img class="logo del2" src="images/sourcebook logo_official.png"><img class="logo del3" src="images/Develop_logo_official.png">
+        <div><img class="logo del3" src="images/ME logo.png"></div><div><img class="logo del2" src="images/RentalStaging.png"></div><div><img class="logo del3" src="images/CreativePlanet.png"></div><div><img class="logo del1" src="images/GVExpo_Logo.png"></div><div><img class="logo del1" src="images/BroadcastProduction.png"></div><div><img class="logo del1" src="images/PSN.png"></div><div><img class="logo del1" src="images/DVExpo.png"></div><div><img class="logo del1" src="images/videoedge_grey.png"></div><div><img class="logo del3" src="images/GovVideo.png"></div><div><img class="logo del1" src="images/MCV.png"></div><div><img class="logo del2" src="images/GPlayer.png"></div><div><img class="logo del3" src="images/MultiChannel.png"></div><div><img class="logo del2" src="images/NextTV_logo_grey.png"></div><div><img class="logo del3" src="images/AudioPro_official_logo.png"></div><div><img class="logo del1" src="images/KB_logo2011.png"></div><div><img class="logo del3" src="images/PAR.png"></div><div><img class="logo del3" src="images/Licencingbiz_official_logo.png"></div><div><img class="logo del1" src="images/TWICE.png"></div><div><img class="logo del1" src="images/Revolver logo.png"></div><div><img class="logo del1" src="images/TechLearning.png"></div><div><img class="logo del1" src="images/Guitar World Logo.png"></div><div><img class="logo del3" src="images/TVT.png"></div><div><img class="logo del3" src="images/AudioMedia.png"></div><div><img class="logo del3" src="images/DigiSignage.png"></div><div><img class="logo del3" src="images/RadioLogo_2011.png"></div><div><img class="logo del2" src="images/MIX_logo.png"></div><div><img class="logo del2" src="images/Connect2ME_Logo_grey.png"></div><div><img class="logo del2" src="images/RadioWorld.png"></div><div><img class="logo del2" src="images/B&C.png"></div><div><img class="logo del1" src="images/Music Week logo.png"></div><div><img class="logo del3" src="images/Installation logo.png"></div><div><img class="logo del3" src="images/AVTech.png"></div><div><img class="logo del2" src="images/BikeBizLogo.png"></div><div><img class="logo del3" src="images/GA_logo.png"></div><div><img class="logo del2" src="images/SCN.png"></div><div><img class="logo del3" src="images/SVC_2011_logo.png"></div><div><img class="logo del1" src="images/BPlayer_2012.png"></div><div><img class="logo del2" src="images/ToyNews_official.png"></div><div><img class="logo del1" src="images/PCR_Logo_official.png"></div><div><img class="logo del2" src="images/TVBE Logo.png"></div><div><img class="logo del2" src="images/healthcareAV.png"></div><div><img class="logo del1" src="images/Digital Video Logo_2011_grey.png"></div><div><img class="logo del1" src="images/PSNE Logo - outlines.png"></div><div><img class="logo del3" src="images/Resi.png"></div><div><img class="logo del3" src="images/MIPRO_LOGO_official.png"></div><div><img class="logo del1" src="images/SchoolCIO_Logo_grey.png"></div><div><img class="logo del2" src="images/sourcebook logo_official.png"></div><div><img class="logo del3" src="images/Develop_logo_official.png"></div>
+        </div>
       </div>
-      <!--<div id="footerImage"><img src="images/footer.png"></div>-->
+      <div id="footerImage"><img src="images/NewBayMedia_footer.png"></div>
     </body>
   </html>
 
