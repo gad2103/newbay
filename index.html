@@ -1,177 +1,342 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<link rel="stylesheet" href="/static/css/all.css">
-	<title>Test</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-</head>
-<body>
-  <script>
- (function() {
-  var requestAnimationFrame = window.requestAnimationFrame       ||
-                              window.webkitRequestAnimationFrame ||
-                              window.mozRequestAnimationFrame    ||
-                              function(func) { setTimeout(func, 17); };
-
-  var html = document.documentElement;
-
-  function Snowflake(maxX) {
-    this.reset(maxX);
-  }
-  Snowflake.prototype.tick = function() {
-    var sidePhase = this.sidePhase += this.sideVel;
-    this.y += this.vel;
-    this.x += this.sideVel;
-  };
-  Snowflake.prototype.reset = function(maxX) {
-    var rand = Math.random();
-    var chanceOfLargeSnowflake = 0.15;
-    
-    this.size = 1 + Math.random() * 5;
-    this.vel = 2 + Math.random() * 3;
-    this.alpha = 0.5 + Math.random() * 0.8;
-
-    // random x position
-    this.x = Math.random() * maxX;
-    this.y = -this.size;
-
-    // side-to-side movement
-    this.sideVel = (0.5 - Math.random()) * this.vel;
-
-
-    return this;
-  };
-  (function() {
-    var canvas = document.createElement('canvas');
-    var context = canvas.getContext('2d');
-    //var settleCanvas = document.createElement('canvas');
-   // var settleContext = context && settleCanvas.getContext('2d');
-    var canvasStyle = canvas.style;
-   // var settleCanvasStyle = settleCanvas.style;
-    var windowResized;
-    var activeFlakes = [];
-    var snowflakesPerPixelPerSecond = 0.05;
-    var PIx2 = Math.PI*2;
-    var assumedFps = 60;
-    //var settlePoint;
-    var snowflakePool = [];
-
-    function resizeCanvas() {
-      //settlePoint = Array(html.clientWidth);
-      /*settleCanvas.width =*/ canvas.width = 500; //html.clientWidth; //document.getElementById('holidayCard').clientWidth;
-      /*settleCanvas.height =*/ canvas.height = 470; //html.clientHeight;
-    }
-
-    function updateSettlePoints(flake) {
-      var size = flake.size * 0.8; // reduce coral effect
-      var xStart = Math.floor(flake.x - size);
-      var range = size * 2;
-      var newY;
-
-      if (xStart < 0) {
-        range += xStart;
-        xStart = 0;
+  <head>
+    <style type="text/css">
+      audio {
+        visibility: hidden;
       }
-      if (xStart + range > settlePoint.length) {
-        range -= xStart + range - settlePoint.length;
+      #footerImage {
+        position:absolute;
+        bottom:-3%;
+        z-index: 50000;
       }
+      #NBThankYou {
+        position:absolute;
+        bottom: 4%;
+        left: 24%;
+        z-index: 60000;
+      }
+      .fade-in {
+        opacity:0;  /* make things invisible upon start */
+        -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+        -moz-animation:fadeIn ease-in 1;
+        animation:fadeIn ease-in 1;
 
-      for (var i = 0; i < range; i++) {
-        newY = flake.y - (size * Math.cos( (i/range) * Math.PI - (Math.PI/2) ));
-        settlePoint[i + xStart] = Math.min(settlePoint[i + xStart] || Infinity, newY);
+        -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+        -moz-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        -webkit-animation-duration:1s;
+        -moz-animation-duration:1s;
+        animation-duration:1s;
       }
-    }
-    
-    var flakesToCreate = 0;
-    function frame() {
-      flakesToCreate += (snowflakesPerPixelPerSecond / assumedFps) * canvas.width;
-      var flakesThisFrame = Math.floor(flakesToCreate);
-      flakesToCreate -= flakesThisFrame;
-      
-      // clear canvas
-      if (windowResized) {
-        resizeCanvas();
-        windowResized = false;
+      .fade-in.two {
+        -webkit-animation-delay: 2s;
+        -moz-animation-delay:2s;
+        animation-delay: 2s;
       }
-      else {
-        context.clearRect(0, 0, canvas.width, canvas.height);
+      #holidayCard {
+        position:relative;
+        width: 500px;
+        height: 650px;
+        background: url('images/NewBayMedia_HolidayCard.png');
+        overflow:hidden;
       }
-      
-      // add new flake?
-      while ( flakesThisFrame-- ) {
-        if (snowflakePool.length) {
-          activeFlakes.push( snowflakePool.pop().reset(canvas.width) );
+      @media (max-width:400px) {
+        #holidayCard {
+          width: 320px;
+          height:416px;
+          background-size:100%;
         }
-        else {
-          activeFlakes.push( new Snowflake(canvas.width) );
+        #footerImage img {
+          width: 100%;
         }
+        #NBThankYou img {
+          width: 75%;
+        }
+        #logos {
+          width: 100% !important;
+          bottom:484px !important;
+        }
+        #logos div {
+          max-width: 90px;
+        }
+        #logos img {
+          max-width: 65%;
+        }
+        #logos div:nth-of-type(3n) { -webkit-animation-delay: 30.3s !important; -webkit-animation-duration: 20s !important; -moz-animation-delay: 36.3s !important; -moz-animation-duration: 20s !important; }
+      #logos div:nth-of-type(3n+1) {-webkit-animation-delay: 13.0s !important;-webkit-animation-duration: 20s !important; -moz-animation-delay: 18.0s !important;-moz-animation-duration: 20s !important; }
+      #logos div:nth-of-type(3n+2) { -webkit-animation-delay: 1.4s !important;-webkit-animation-duration: 20s !important;  -moz-animation-delay: 1.4s !important;-moz-animation-duration: 20s !important; }
+
+      }
+      /* General Styling of the snowflakes */
+      div#flakes {
+        position: absolute;
+        top: -50px;
+        z-index: 0;
+        height: 1px !important;
       }
 
-      var i = activeFlakes.length;
-      var flake;
-      
-      // for each flake...
-      while (i--) {
-        flake = activeFlakes[i];
-        flake.tick();
-        
-        // splice flake if it's now out of rendering zone
-        if (flake.y >= canvas.height /*|| flake.y >= settlePoint[Math.floor(flake.x)]*/) {
-          snowflakePool.push.apply(snowflakePool, activeFlakes.splice(i, 1));
-          // this flake effects our settle points
-          /*if (flake.alpha > 0.8) {
-            updateSettlePoints(flake);
-          }
-          settleContext.fillStyle='rgba(255, 255, 255, ' + flake.alpha + ')';
-          settleContext.beginPath();
-          settleContext.arc(flake.x, flake.y, flake.size, 0, PIx2, true);
-          settleContext.closePath();
-          settleContext.fill();*/
-          continue;
-        }
-        
-        // render to canvas
-        context.fillStyle='rgba(229, 225, 200, ' + flake.alpha + ')';
-        context.beginPath();
-        context.arc(flake.x, flake.y, flake.size, 0, PIx2, true);
-        context.closePath();
-        context.fill();
+      /* default animation and transform */
+      i {
+        background: white;
+        display: inline-block;
+        border-radius: 50%;
+        height: 8px; width: 5px;
+        pointer-events: none;
+        -webkit-font-smoothing: antialiased; 
+        -moz-font-smoothing: antialiased; 
+        -webkit-transform-origin: left -20px;
+        -webkit-animation-name: falling;
+        -webkit-animation-duration: 5s;
+        -webkit-animation-direction:normal;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-delay: 0s;
+        -webkit-animation-fill-mode: none;
+        -webkit-animation-play-state:running;
+        /* or */
+        -moz-animation: falling 5s linear 2s 20;
       }
-      requestAnimationFrame(frame);
-    }
-    
-    if (context) {
-      resizeCanvas();
-      
-      // style the canvas
-      canvasStyle.position = 'relative';
-      canvasStyle.top = 0;
-      canvasStyle.left = 0;
-      canvasStyle.zIndex = 1138;
-      canvasStyle['pointerEvents'] = 'none';
-      
-      //settleCanvasStyle.cssText = canvasStyle.cssText;
-      
-      // watch out for resizes
-      window.addEventListener('resize', function() {
-        windowResized = true;
-      }, false);
-      
-      // add it to the page & start animating
-      var snowContain = document.createElement('div');
-      snowContain.setAttribute("id","holidayCard");
-      snowContain.style.cssText = "width:500px;height:650px;background:url('images/NewBayMedia_HolidayCard.png');";
-      document.body.appendChild(snowContain);
-      snowContain.appendChild(canvas);
-      //document.body.appendChild(canvas);
-      //document.body.appendChild(settleCanvas);
-      requestAnimationFrame(frame);
-    }
-  })();
-  
-})(); 
-  </script>
-</body>
+
+      /* fade in for the thank you element */
+      @-webkit-keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @-moz-keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* animation used for ALL snowflakes */
+      @-webkit-keyframes falling {
+        0% {
+          -webkit-transform: translate3d(0, 0, 0) rotate(-10deg) scale(0.9, 0.9);
+        }
+        30% {
+          opacity: 0.75;
+        }
+        55%{
+          opacity: 0;
+        }
+        100% {
+          -webkit-transform: 
+          translate3d(30px, 700px, 0) rotate(0deg) scale(1.1, 1.1);
+        }
+      }
+      @-moz-keyframes falling {
+        0% {
+          -moz-transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9, 0.9);
+        }
+        30% {
+          opacity: 0.75;
+        }
+        55% {
+          opacity: 0;
+        }
+        100% {
+          -moz-transform: 
+          translate(30px, 1100px) rotate(0deg) scale(1.1, 1.1);
+        }
+      }
+      /* different sizes, and default origins based on size */
+      .lg {
+        height:20px;
+        width:20px;
+        -webkit-transform-origin: right -30px;
+        -moz-transform-origin: right -30px;
+      }
+      .med {
+        height:10px;
+        width:10px;
+        -webkit-transform-origin: left -30px;
+        -moz-transform-origin: left -30px;
+      }
+      .sm {
+        height:4px;
+        width:3px;
+        -webkit-transform-origin: -30px 0;
+        -moz-transform-origin: -30px 0;
+      }
+      /* different speeds, with iteration counts to equal 3minutes approx. */
+      .slow {
+        -webkit-animation-duration: 18.3s;
+        -webkit-animation-iteration-count: infinite; /* 12 */
+        -webkit-transform-origin: -10px -20px;
+        -moz-animation-duration: 18.3s;
+        -moz-animation-iteration-count: infinite; /* 12 */
+        -moz-transform-origin: -10px -20px;
+
+      }
+      .med {
+        -webkit-animation-duration: 10.1s;
+        -webkit-animation-iteration-count: infinite; /* 20 */
+        -webkit-transform-origin: 10px -20px;
+        -moz-animation-duration: 10.1s;
+        -moz-animation-iteration-count: infinite; /* 20 */
+        -moz-transform-origin: 10px -20px;
+      }
+      .fast {
+        -webkit-animation-duration: 9.1s;
+        -webkit-animation-iteration-count: infinite; /* 35 */
+        -webkit-transform-origin: right -20px;
+        -moz-animation-duration: 9.1s;
+        -moz-animation-iteration-count: infinite; /* 35 */
+        -moz-transform-origin: right -20px;
+
+      }
+      /* different delays so they don't all start at the same time */
+      .del1 {
+        -webkit-animation-delay: 2.6s;
+        -moz-animation-delay: 2.6s;
+      }
+      .del2 {
+        -webkit-animation-delay: 1.0s;
+        -moz-animation-delay: 1.0s;
+      }
+      .del3 {
+        -webkit-animation-delay: 3.0s;
+        -moz-animation-delay: 3.0s;
+      }
+      .del4 {
+        -webkit-animation-delay: 4s;
+        -moz-animation-delay: 4s;
+      }
+      /* playing with timing functions to make it a teeny bit more random like */
+      .lg.del2 {
+        -webkit-animation-timing-function:ease-out;
+        -moz-animation-timing-function:ease-out;
+      }
+      .lg.del1 {
+        -webkit-animation-timing-function:ease-out;
+        -moz-animation-timing-function:ease-out;
+      }
+      .avg.del3 {
+        -webkit-animation-timing-function:ease-out;
+        -moz-animation-timing-function:ease-out;
+      }
+      .lg.del2 {
+        -moz-animation-timing-function:ease-out;
+        -webkit-animation-timing-function:ease-out;
+      }
+      .lg.del1 {
+        -moz-animation-timing-function:ease-out;
+        -webkit-animation-timing-function:ease-out;
+      }
+      .avg.del3 {
+        -moz-animation-timing-function:ease-in;
+        -webkit-animation-timing-function:ease-in;
+      }
+      /* playing with opacity to make it a teeny bit more random like */
+      .avg.del2 {
+        opacity: 0.5
+      }
+      .avg.del1 {
+        opacity: 0.3
+      }
+      .fast.del2 {
+        opacity: 0.7
+      }
+      .fast.del1 {
+        opacity: 0.6;
+        -webkit-animation-timing-function:ease-in;
+        -webkit-transform-origin: left 10px;
+        -moz-animation-timing-function:ease-in;
+        -moz-transform-origin: left 10px;
+      }
+      .slow {
+        opacity: 0.8
+      }
+      #logos {
+        position: absolute;
+        bottom: 645px;
+        left: 18px;
+        z-index: 20000;
+        width: 500px;
+      }
+     #logos div {
+        float:left;
+        -webkit-animation: logoFalling linear 1;
+        -webkit-transform-origin: left -20px;
+        -webkit-animation-direction:normal;
+        -webkit-animation-fill-mode: none;
+        -moz-animation: logoFalling linear 1;
+        -moz-transform-origin: left -20px;
+        -moz-animation-direction:normal;
+        -moz-animation-fill-mode: none;
+      }
+      #logos div:nth-of-type(3n) { -webkit-animation-delay: 36.3s ; -webkit-animation-duration: 20s ; -moz-animation-delay: 36.3s ; -moz-animation-duration: 20s ; }
+      #logos div:nth-of-type(3n+1) {-webkit-animation-delay: 18.0s ;-webkit-animation-duration: 20s ; -moz-animation-delay: 18.0s ;-moz-animation-duration: 20s ; }
+      #logos div:nth-of-type(3n+2) { -webkit-animation-delay: 1.4s ;-webkit-animation-duration: 20s ;  -moz-animation-delay: 1.4s ;-moz-animation-duration: 20s ; }
+      #logos div img {
+        -webkit-animation: logoRotate 1s infinite;
+        -webkit-animation-direction: alternate;
+        -webkit-animation-timing-function: ease-in-out;
+        -webkit-transform-origin: 50% -50%;
+        -moz-animation: logoRotate 1s infinite;
+        -moz-animation-direction: alternate;
+        -moz-animation-timing-function: ease-in-out;
+        -moz-transform-origin: 50% -50%;
+      }
+      #logos div > img:nth-of-type(3n) { -webkit-animation-delay: 0s !important; -webkit-transform-origin: 100% 75% !important;  -moz-animation-delay: 0.3s !important; -moz-transform-origin: 100% -75% !important; }
+      @-webkit-keyframes logoRotate {
+        0% {
+          -webkit-transform: translate3d(15px,0,0) rotate(-2deg);
+        }
+        100% {
+          -webkit-transform: translate3d(-15px,0,0) rotate(2deg);
+        }
+      }
+      @-webkit-keyframes logoFalling {
+        0% {
+          -webkit-transform: translate3d(0, 0, 0) scale(0.9, 0.9);
+          opacity: 1;
+        }
+        70% {
+          opacity: 0.7;
+        }
+        100% {
+          opacity: 0;
+          -webkit-transform: translate3d(0, 700px, 0)  scale(1.1, 1.1);
+        }
+      }
+      @-moz-keyframes logoRotate {
+        0% {
+          -moz-transform: translate3d(15px,0,0) rotate(-2deg);
+        }
+        100% {
+          -moz-transform: translate3d(-15px,0,0) rotate(2deg);
+        }
+      }
+      @-moz-keyframes logoFalling {
+        0% {
+          -moz-transform: translate3d(0, 0, 0) scale(0.9, 0.9);
+          opacity: 1;
+        }
+        70% {
+          opacity: 0.7;
+        }
+        100% {
+          opacity: 0;
+          -moz-transform: translate3d(0, 700px, 0)  scale(1.1, 1.1);
+        }
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0;">
+    <div id="holidayCard">
+      <audio autoplay="autoplay">
+        <source src="music/BTA.mp3" type="audio/mpeg">
+        <source src="music/BTA.ogg" type="audio/ogg">
+      </audio>
+      <div id="flakes"> <i class="lg slow del2"></i> <i class="sm fast del1"></i> <i class="lg avg del3"></i> <i class="med slow del1"></i> <i class="lg slow del3"></i> <i class="sm avg del1"></i> <i class="med avg del2"></i> <i class="lg avg del2"></i> <i class="sm slow del1"></i> <i class="med fast del2"></i> <i class="med slow del3"></i> <i class="slow del2"></i> <i class="sm avg del2"></i> <i class="sm avg del3"></i> <i class="lg avg del1"></i> <i class="lg fast del2"></i> <i class=" slow del3"></i> <i class="med avg del4"></i> <i class="lg avg"></i> <i class="sm fast del3"></i> <i class="lg slow del1"></i> <i class="sm fast del2"></i> <i class="med fast del4"></i> <i class="med slow del2"></i> <i class="sm slow del2"></i> <i class="lg avg del4"></i> <i class="lg fast del1"></i> <i class="sm slow del1"></i> <i class="avg del3"></i> <i class="med slow del3"></i> <i class="lg avg del2"></i> <i class="sm slow del2"></i> <i class="sm fast del3"></i> <i class="fast del1"></i></div>
+      <div id="logos">
+        <div><img class="logo 3" src="images/ME logo.png"></div><div><img class="logo 2" src="images/RentalStaging.png"></div><div><img class="logo 3" src="images/CreativePlanet.png"></div><div><img class="logo 1" src="images/GVExpo_Logo.png"></div><div><img class="logo 1" src="images/BroadcastProduction.png"></div><div><img class="logo 1" src="images/PSN.png"></div><div><img class="logo 1" src="images/DVExpo.png"></div><div><img class="logo 1" src="images/videoedge_grey.png"></div><div><img class="logo 3" src="images/GovVideo.png"></div><div><img class="logo 1" src="images/MCV.png"></div><div><img class="logo 2" src="images/GPlayer.png"></div><div><img class="logo 3" src="images/MultiChannel.png"></div><div><img class="logo 2" src="images/NextTV_logo_grey.png"></div><div><img class="logo 3" src="images/AudioPro_official_logo.png"></div><div><img class="logo 1" src="images/KB_logo2011.png"></div><div><img class="logo 3" src="images/PAR.png"></div><div><img class="logo 3" src="images/Licencingbiz_official_logo.png"></div><div><img class="logo 1" src="images/TWICE.png"></div><div><img class="logo 1" src="images/Revolver logo.png"></div><div><img class="logo 1" src="images/TechLearning.png"></div><div><img class="logo 1" src="images/Guitar World Logo.png"></div><div><img class="logo 3" src="images/TVT.png"></div><div><img class="logo 3" src="images/AudioMedia.png"></div><div><img class="logo 3" src="images/DigiSignage.png"></div><div><img class="logo 3" src="images/RadioLogo_2011.png"></div><div><img class="logo 2" src="images/MIX_logo.png"></div><div><img class="logo 2" src="images/Connect2ME_Logo_grey.png"></div><div><img class="logo 2" src="images/RadioWorld.png"></div><div><img class="logo 2" src="images/B&C.png"></div><div><img class="logo 1" src="images/Music Week logo.png"></div><div><img class="logo 3" src="images/Installation logo.png"></div><div><img class="logo 3" src="images/AVTech.png"></div><div><img class="logo 2" src="images/BikeBizLogo.png"></div><div><img class="logo 3" src="images/GA_logo.png"></div><div><img class="logo 2" src="images/SCN.png"></div><div><img class="logo 3" src="images/SVC_2011_logo.png"></div><div><img class="logo 1" src="images/BPlayer_2012.png"></div><div><img class="logo 2" src="images/ToyNews_official.png"></div><div><img class="logo 1" src="images/PCR_Logo_official.png"></div><div><img class="logo 2" src="images/TVBE Logo.png"></div><div><img class="logo 2" src="images/healthcareAV.png"></div><div><img class="logo 1" src="images/Digital Video Logo_2011_grey.png"></div><div><img class="logo 1" src="images/PSNE Logo - outlines.png"></div><div><img class="logo 3" src="images/Resi.png"></div><div><img class="logo 3" src="images/MIPRO_LOGO_official.png"></div><div><img class="logo 1" src="images/SchoolCIO_Logo_grey.png"></div><div><img class="logo 2" src="images/sourcebook logo_official.png"></div><div><img class="logo 3" src="images/Develop_logo_official.png"></div>
+      </div>
+      <div id="NBThankYou" class="fade-in two"><img src="images/NewBayMediaLogo.png"></div>
+      <div id="footerImage"><img src="images/NewBayMedia_footer.png"></div>
+    </div>
+  </body>
 </html>
+
